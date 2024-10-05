@@ -107,6 +107,22 @@ class SignUpPage extends StatelessWidget {
       );
     }
 
+    Widget termsAndConditions() {
+      return Container(
+        margin: const EdgeInsets.only(top: 50),
+        child: Center(
+          child: Text(
+            "Terms and Conditions",
+            style: greyTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: light,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -117,6 +133,7 @@ class SignUpPage extends StatelessWidget {
             children: [
               title(),
               FormSignUp(),
+              termsAndConditions(),
             ],
           ),
         ),
