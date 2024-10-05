@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+double defaultMargin = 24.0;
+double defaultRadius = 17.0;
+
 // The write is will be include about the opacity of colour
 Color kPrimaryColor = const Color(0xFF5C40CC);
 Color kBlackColor = const Color(0xFF1F1449);
