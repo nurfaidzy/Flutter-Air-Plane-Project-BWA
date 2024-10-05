@@ -3,7 +3,7 @@ import "package:air_plane/ui/pages/splash_page.dart";
 import "package:flutter/material.dart";
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
