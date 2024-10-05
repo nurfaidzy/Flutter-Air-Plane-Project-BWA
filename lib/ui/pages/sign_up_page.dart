@@ -21,7 +21,7 @@ class SignUpPage extends StatelessWidget {
       );
     }
 
-    Widget InputSection() {
+    Widget FormSignUp() {
       return Container(
         margin: const EdgeInsets.only(top: 30),
         padding: const EdgeInsets.symmetric(
@@ -39,40 +39,69 @@ class SignUpPage extends StatelessWidget {
             "Email Address",
             "Password",
             "Hobby",
-          ].map((e) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  e,
-                  style: blackTextStyle.copyWith(
-                    fontSize: 16,
-                    fontWeight: regular,
-                  ),
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                TextFormField(
-                  obscureText: e == "Password" ? true : false,
-                  decoration: InputDecoration(
-                    hintText: e,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(defaultRadius),
+            "SignUp",
+          ].map<Widget>((e) {
+            if (e == "SignUp") {
+              return Center(
+                child: Container(
+                  margin: const EdgeInsets.only(top: 30),
+                  width: double.infinity,
+                  height: 55,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/get-started");
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: kPrimaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(defaultRadius),
+                      ),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(defaultRadius),
-                      borderSide: BorderSide(
-                        color: kPrimaryColor,
+                    child: Text(
+                      "Get Started",
+                      style: whiteTextStyle.copyWith(
+                        fontSize: 18,
+                        fontWeight: medium,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-              ],
-            );
+              );
+            } else {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    e,
+                    style: blackTextStyle.copyWith(
+                      fontSize: 16,
+                      fontWeight: regular,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  TextFormField(
+                    obscureText: e == "Password" ? true : false,
+                    decoration: InputDecoration(
+                      hintText: e,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(defaultRadius),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(defaultRadius),
+                        borderSide: BorderSide(
+                          color: kPrimaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+              );
+            }
           }).toList(),
         ),
       );
@@ -87,7 +116,7 @@ class SignUpPage extends StatelessWidget {
           child: ListView(
             children: [
               title(),
-              InputSection(),
+              FormSignUp(),
             ],
           ),
         ),
