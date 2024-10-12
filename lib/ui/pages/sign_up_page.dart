@@ -1,3 +1,4 @@
+import 'package:air_plane/ui/pages/custom_button.dart';
 import 'package:flutter/material.dart';
 import "../../shared//theme.dart";
 
@@ -42,29 +43,18 @@ class SignUpPage extends StatelessWidget {
             "SignUp",
           ].map<Widget>((e) {
             if (e == "SignUp") {
+              // return CustomButton(
+              //   title: "Get Started",
+              //   onPressed: () {
+              //     Navigator.pushNamed(context, "/bonus");
+              //   },
+              // );
               return Center(
-                child: Container(
-                  margin: const EdgeInsets.only(top: 30),
-                  width: double.infinity,
-                  height: 55,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/bonus");
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: kPrimaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(defaultRadius),
-                      ),
-                    ),
-                    child: Text(
-                      "Get Started",
-                      style: whiteTextStyle.copyWith(
-                        fontSize: 18,
-                        fontWeight: medium,
-                      ),
-                    ),
-                  ),
+                child: CustomButton(
+                  title: "Get Started",
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/bonus");
+                  },
                 ),
               );
             } else {
