@@ -1,4 +1,4 @@
-import 'package:air_plane/ui/pages/bottom_navigation.dart';
+import 'package:air_plane/ui/widgets/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
 

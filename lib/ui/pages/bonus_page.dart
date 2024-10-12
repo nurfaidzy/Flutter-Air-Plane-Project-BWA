@@ -1,5 +1,5 @@
 import 'package:air_plane/shared/theme.dart';
-import 'package:air_plane/ui/pages/custom_button.dart';
+import 'package:air_plane/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class BonusPage extends StatelessWidget {
