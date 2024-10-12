@@ -1,3 +1,4 @@
+import 'package:air_plane/ui/pages/home_page.dart';
 import 'package:air_plane/ui/widgets/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
@@ -51,7 +52,7 @@ class MainPage extends StatelessWidget {
         backgroundColor: kBackgroundColor,
         body: Stack(
           children: [
-            const Text("Home Page"),
+            const HomePage(),
             customBottomNavigation(),
           ],
         ));
