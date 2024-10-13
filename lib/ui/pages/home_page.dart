@@ -1,3 +1,4 @@
+import 'package:air_plane/ui/widgets/popular_destination.dart';
 import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
 
@@ -54,99 +55,44 @@ class HomePage extends StatelessWidget {
 
     Widget popularDestination() {
       return Container(
-        margin: const EdgeInsets.only(top: 30),
-        child: Row(
-          children: [
-            Container(
-              width: 200,
-              height: 323,
-              margin: EdgeInsets.only(left: defaultMargin),
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: kWhiteColor,
-                borderRadius: BorderRadius.circular(defaultRadius),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                      width: 180,
-                      height: 220,
-                      margin: const EdgeInsets.only(bottom: 20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(defaultRadius),
-                        image: const DecorationImage(
-                          image: AssetImage("assets/image_destination1.png"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          width: 55,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: kWhiteColor,
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(
-                                defaultRadius,
-                              ),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 20,
-                                height: 20,
-                                margin: const EdgeInsets.only(right: 2),
-                                decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage("assets/icon_star.png"),
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                "4.8",
-                                style: blackTextStyle.copyWith(
-                                  fontWeight: medium,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      )),
-                  Container(
-                    margin: const EdgeInsets.only(left: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Lake Ciliwung",
-                          style: blackTextStyle.copyWith(
-                            fontSize: 16,
-                            fontWeight: semiBold,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "Tanggerang",
-                          style: greyTextStyle.copyWith(
-                            fontSize: 14,
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
+          margin: const EdgeInsets.only(top: 30),
+          child: const SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                PopularDestination(
+                  imageUrl: "assets/image_destination1.png",
+                  name: "Lake Ciliwung",
+                  city: "Tangerang",
+                  stars: "4.8",
+                ),
+                PopularDestination(
+                  imageUrl: "assets/image_destination2.png",
+                  name: "White House",
+                  city: "Spain",
+                  stars: "4.7",
+                ),
+                PopularDestination(
+                  imageUrl: "assets/image_destination3.png",
+                  name: "Hill Heyo",
+                  city: "Monaco",
+                  stars: "4.8",
+                ),
+                PopularDestination(
+                  imageUrl: "assets/image_destination4.png",
+                  name: "Menarra",
+                  city: "Japan",
+                  stars: "4.7",
+                ),
+                PopularDestination(
+                  imageUrl: "assets/image_destination5.png",
+                  name: "Payung Teduh",
+                  city: "Singapore",
+                  stars: "4.8",
+                ),
+              ],
             ),
-          ],
-        ),
-      );
+          ));
     }
 
     return ListView(
