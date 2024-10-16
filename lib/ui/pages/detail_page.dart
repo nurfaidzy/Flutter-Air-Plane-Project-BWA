@@ -1,3 +1,4 @@
+import 'package:air_plane/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
 
@@ -50,6 +51,31 @@ class detailPage extends StatelessWidget {
                 Colors.black.withOpacity(0.95),
               ]),
         ),
+      );
+    }
+
+    Widget customChecklis({
+      required String title,
+    }) {
+      return Row(
+        children: [
+          Container(
+            width: 20,
+            height: 20,
+            margin: const EdgeInsets.only(right: 2),
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage("assets/icon_check.png"),
+              ),
+            ),
+          ),
+          Text(title,
+              style: blackTextStyle.copyWith(
+                fontSize: 14,
+                fontWeight: regular,
+              )),
+        ],
       );
     }
 
@@ -167,9 +193,74 @@ class detailPage extends StatelessWidget {
                       photoSection(imageUrl: "assets/image_photo3.png"),
                     ],
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Interest",
+                    style: blackTextStyle.copyWith(
+                      fontSize: 16,
+                      fontWeight: semiBold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          customChecklis(title: "Kids Park"),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          customChecklis(title: "City Museum"),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          customChecklis(title: "Honor Bridge"),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          customChecklis(title: "Central Mall"),
+                        ],
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("IDR 2.500.000",
+                                  style: blackTextStyle.copyWith(
+                                    fontSize: 18,
+                                    fontWeight: medium,
+                                  )),
+                              Text("per orang",
+                                  style: greyTextStyle.copyWith(
+                                    fontSize: 14,
+                                  )),
+                            ]),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        child: CustomButton(
+                          title: "Book Now",
+                          onPressed: () {},
+                          width: 170,
+                        ),
+                      )
+                    ],
+                  )
                 ],
               ),
-            )
+            ),
           ],
         ),
       );
@@ -177,8 +268,14 @@ class detailPage extends StatelessWidget {
 
     return Scaffold(
         backgroundColor: kWhiteColor,
-        body: Stack(
-          children: [backGroundImage(), customShaddow(), Content()],
+        body: SingleChildScrollView(
+          child: Stack(
+            children: [
+              backGroundImage(),
+              customShaddow(),
+              Content(),
+            ],
+          ),
         ));
   }
 }
