@@ -19,6 +19,23 @@ class detailPage extends StatelessWidget {
       );
     }
 
+    Widget photoSection({
+      required String imageUrl,
+    }) {
+      return Container(
+        width: 70,
+        height: 70,
+        margin: const EdgeInsets.only(right: 16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18),
+          image: DecorationImage(
+            image: AssetImage(imageUrl),
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    }
+
     Widget customShaddow() {
       return Container(
         width: double.infinity,
@@ -53,7 +70,7 @@ class detailPage extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 256),
+              margin: const EdgeInsets.only(top: 256),
               child: Row(
                 children: [
                   Expanded(
@@ -97,6 +114,57 @@ class detailPage extends StatelessWidget {
                           fontWeight: medium,
                         ),
                       )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+              decoration: BoxDecoration(
+                color: kWhiteColor,
+                borderRadius: BorderRadius.circular(18),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "About",
+                    style: blackTextStyle.copyWith(
+                      fontSize: 16,
+                      fontWeight: semiBold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Text(
+                    "Lake Ciliwung is a lake located in the area of Tangerang, Banten. This lake is located at an altitude of 1000 meters above sea level. This lake is also very suitable for those of you who like fishing.",
+                    style: blackTextStyle.copyWith(
+                      fontWeight: regular,
+                      // interface use by iphone 16 layout make space so far
+                      height: 2,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Photos",
+                    style: blackTextStyle.copyWith(
+                      fontSize: 16,
+                      fontWeight: semiBold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Row(
+                    children: [
+                      photoSection(imageUrl: "assets/image_photo1.png"),
+                      photoSection(imageUrl: "assets/image_photo2.png"),
+                      photoSection(imageUrl: "assets/image_photo3.png"),
                     ],
                   ),
                 ],
