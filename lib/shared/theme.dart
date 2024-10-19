@@ -12,6 +12,8 @@ Color kGreenColor = const Color(0xFF0EC3AE);
 Color kRedColor = const Color(0xFFEB70A5);
 Color kBackgroundColor = const Color(0xFFFAFAFA);
 Color kInactiveColour = const Color(0xFFDBD7EC);
+Color kUnavailableColour = const Color(0xFFEBECF1);
+Color kAvailableColour = const Color(0xFFEBECF1);
 
 TextStyle blackTextStyle = TextStyle(
   color: kBlackColor,
