@@ -232,38 +232,44 @@ class detailPage extends StatelessWidget {
                       )
                     ],
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("IDR 2.500.000",
-                                  style: blackTextStyle.copyWith(
-                                    fontSize: 18,
-                                    fontWeight: medium,
-                                  )),
-                              Text("per orang",
-                                  style: greyTextStyle.copyWith(
-                                    fontSize: 14,
-                                  )),
-                            ]),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 30),
-                        child: CustomButton(
-                          title: "Book Now",
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const choseSeatPage()));
-                          },
-                          width: 170,
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 20),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 40),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("IDR 2.500.000",
+                                      style: blackTextStyle.copyWith(
+                                        fontSize: 18,
+                                        fontWeight: medium,
+                                      )),
+                                  Text("per orang",
+                                      style: greyTextStyle.copyWith(
+                                        fontSize: 14,
+                                      )),
+                                ]),
+                          ),
                         ),
-                      )
-                    ],
+                        Container(
+                          margin: const EdgeInsets.only(),
+                          child: CustomButton(
+                            title: "Book Now",
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const choseSeatPage()));
+                            },
+                            width: 170,
+                          ),
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),
