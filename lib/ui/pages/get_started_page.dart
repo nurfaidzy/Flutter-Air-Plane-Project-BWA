@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import "package:air_plane/ui/widgets/custom_button.dart";
 import "package:flutter/material.dart";
 import "../../shared//theme.dart";

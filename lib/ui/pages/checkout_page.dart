@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:air_plane/ui/pages/success_checkout.dart';
 import 'package:air_plane/ui/widgets/custom_button.dart';
 import 'package:air_plane/ui/widgets/destination_tile.dart';

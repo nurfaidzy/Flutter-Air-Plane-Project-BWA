@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:air_plane/ui/pages/detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
