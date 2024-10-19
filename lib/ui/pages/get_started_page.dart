@@ -42,12 +42,17 @@ class getStartedPage extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              CustomButton(
-                title: "Get Started",
-                onPressed: () {
-                  Navigator.pushNamed(context, "/sign-up");
-                },
-                width: 220,
+              Container(
+                margin: const EdgeInsets.only(
+                  bottom: 50,
+                ),
+                child: CustomButton(
+                  title: "Get Started",
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/sign-up");
+                  },
+                  width: 220,
+                ),
               ),
             ],
           ))

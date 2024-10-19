@@ -250,7 +250,7 @@ class detailPage extends StatelessWidget {
                             ]),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 20),
+                        margin: const EdgeInsets.only(top: 30),
                         child: CustomButton(
                           title: "Book Now",
                           onPressed: () {

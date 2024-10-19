@@ -101,7 +101,7 @@ class BonusPage extends StatelessWidget {
 
   Widget subTitleBalance() {
     return Container(
-      margin: const EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 10, bottom: 50),
       child: Text(
         "We give you early credit so that\nyou can buy a flight ticket",
         style: greyTextStyle.copyWith(
@@ -130,7 +130,7 @@ class BonusPage extends StatelessWidget {
               Navigator.pushNamed(context, "/main");
             },
             width: 220,
-          ),
+          )
         ],
       )),
     );
