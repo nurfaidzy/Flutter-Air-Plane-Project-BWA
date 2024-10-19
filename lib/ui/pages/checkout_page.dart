@@ -241,6 +241,7 @@ class checkoutPage extends StatelessWidget {
     }
 
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       body: ListView(
         padding: EdgeInsets.symmetric(
           horizontal: defaultMargin,
