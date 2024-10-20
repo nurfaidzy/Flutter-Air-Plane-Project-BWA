@@ -1,40 +1,49 @@
+import 'package:air_plane/cubit/pages_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BottomNavigation extends StatelessWidget {
   const BottomNavigation({
     super.key,
+    required this.index,
     required this.imageUrl,
-    required this.isActive,
   });
 
   final String imageUrl;
-  final bool isActive;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const SizedBox(),
-        Container(
-          width: 24,
-          height: 24,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(imageUrl),
+    final currentPage = context.watch<PagesCubit>().state;
+
+    Color colorSelector() {
+      if (currentPage == index) {
+        return kPrimaryColor;
+      } else {
+        return kGreyColor;
+      }
+    }
+
+    return GestureDetector(
+      onTap: () {
+        context.read<PagesCubit>().setPage(index);
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const SizedBox(),
+          Image.asset(imageUrl, width: 24, height: 24, color: colorSelector()),
+          Container(
+            width: 30,
+            height: 2,
+            decoration: BoxDecoration(
+              color: colorSelector(),
+              borderRadius: BorderRadius.circular(18),
             ),
           ),
-        ),
-        Container(
-          width: 30,
-          height: 2,
-          decoration: BoxDecoration(
-            color: isActive ? kPrimaryColor : kWhiteColor,
-            borderRadius: BorderRadius.circular(18),
-          ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }
