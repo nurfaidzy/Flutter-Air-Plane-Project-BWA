@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1001323050616",
+    "project_id": "airplanenurf",
+    "storage_bucket": "airplanenurf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001323050616:android:2d6ec697730aeab66c5f8d",
+        "android_client_info": {
+          "package_name": "com.nurf.airPlane"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBziSkmHOj51yNZYbp-Dj1i-G3tE7-ZH04"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
