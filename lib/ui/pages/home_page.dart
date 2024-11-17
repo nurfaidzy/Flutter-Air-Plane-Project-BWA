@@ -1,9 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:air_plane/cubit/auth_cubit.dart';
 import 'package:air_plane/ui/widgets/destination_tile.dart';
 import 'package:air_plane/ui/widgets/popular_destination.dart';
 import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -11,48 +13,52 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget Header() {
-      return Container(
-        margin: EdgeInsets.symmetric(
-          horizontal: defaultMargin,
-          vertical: 30,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Howdy, \nKezia Anne",
-                      style: blackTextStyle.copyWith(
-                        fontSize: 24,
-                        fontWeight: semiBold,
-                      )),
-                  Text(
-                    "Where to fly today?",
-                    style: greyTextStyle.copyWith(
-                      fontSize: 16,
-                    ),
-                  )
-                ],
-              ),
+      return BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) {
+          return Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: defaultMargin,
+              vertical: 30,
             ),
-            Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: AssetImage("assets/image_profile.png"),
-                    ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Howdy, \n${(state as AuthSuccess).user.name}",
+                          style: blackTextStyle.copyWith(
+                            fontSize: 24,
+                            fontWeight: semiBold,
+                          )),
+                      Text(
+                        "Where to fly today?",
+                        style: greyTextStyle.copyWith(
+                          fontSize: 16,
+                        ),
+                      )
+                    ],
                   ),
+                ),
+                Column(
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage("assets/image_profile.png"),
+                        ),
+                      ),
+                    )
+                  ],
                 )
               ],
-            )
-          ],
-        ),
+            ),
+          );
+        },
       );
     }
 
