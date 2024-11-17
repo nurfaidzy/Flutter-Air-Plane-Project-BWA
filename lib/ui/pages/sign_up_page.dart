@@ -9,16 +9,16 @@ import "../../shared//theme.dart";
 class SignUpPage extends StatelessWidget {
   SignUpPage({super.key});
 
-  TextEditingController nameController = TextEditingController(
+  final TextEditingController nameController = TextEditingController(
     text: "",
   );
-  TextEditingController emailController = TextEditingController(
+  final TextEditingController emailController = TextEditingController(
     text: "",
   );
-  TextEditingController passwordController = TextEditingController(
+  final TextEditingController passwordController = TextEditingController(
     text: "",
   );
-  TextEditingController hobbyController = TextEditingController(
+  final TextEditingController hobbyController = TextEditingController(
     text: "",
   );
 
