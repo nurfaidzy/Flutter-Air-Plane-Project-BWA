@@ -47,4 +47,20 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthFailed(e.toString()));
     }
   }
+
+  void signIn({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      emit(authLoading());
+      UserModel user = await AuthService().signIn(
+        email: email,
+        password: password,
+      );
+      emit(AuthSuccess(user));
+    } catch (e) {
+      emit(AuthFailed(e.toString()));
+    }
+  }
 }

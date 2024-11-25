@@ -9,16 +9,10 @@ import "../../shared//theme.dart";
 class SignInPage extends StatelessWidget {
   SignInPage({super.key});
 
-  final TextEditingController nameController = TextEditingController(
-    text: "",
-  );
   final TextEditingController emailController = TextEditingController(
     text: "",
   );
   final TextEditingController passwordController = TextEditingController(
-    text: "",
-  );
-  final TextEditingController hobbyController = TextEditingController(
     text: "",
   );
 
@@ -63,7 +57,7 @@ class SignInPage extends StatelessWidget {
                   listener: (context, state) {
                     if (state is AuthSuccess) {
                       Navigator.pushNamedAndRemoveUntil(
-                          context, "/bonus", (route) => false);
+                          context, "/main", (route) => false);
                     } else if (state is AuthFailed) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -88,12 +82,9 @@ class SignInPage extends StatelessWidget {
                     return CustomButton(
                       title: "Sign In",
                       onPressed: () {
-                        context.read<AuthCubit>().signUp(
-                              email: emailController.text,
-                              password: passwordController.text,
-                              name: nameController.text,
-                              hobby: hobbyController.text,
-                            );
+                        context.read<AuthCubit>().signIn(
+                            email: emailController.text,
+                            password: passwordController.text);
                       },
                     );
                   },
@@ -115,13 +106,9 @@ class SignInPage extends StatelessWidget {
                   ),
                   TextFormField(
                     obscureText: e == "Password" ? true : false,
-                    controller: e == "Full Name"
-                        ? nameController
-                        : e == "Email Address"
-                            ? emailController
-                            : e == "Password"
-                                ? passwordController
-                                : hobbyController,
+                    controller: e == "Email Address"
+                        ? emailController
+                        : passwordController,
                     decoration: InputDecoration(
                       hintText: e,
                       border: OutlineInputBorder(
