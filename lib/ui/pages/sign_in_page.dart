@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import "../../shared//theme.dart";
 
-class SignUpPage extends StatelessWidget {
-  SignUpPage({super.key});
+class SignInPage extends StatelessWidget {
+  SignInPage({super.key});
 
   final TextEditingController nameController = TextEditingController(
     text: "",
@@ -29,7 +29,7 @@ class SignUpPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Join us and get\nyour next journey",
+            "Sign in with your\nexisting account",
             style: blackTextStyle.copyWith(
               fontSize: 24,
               fontWeight: semiBold,
@@ -39,7 +39,7 @@ class SignUpPage extends StatelessWidget {
       );
     }
 
-    Widget FormSignUp() {
+    Widget FormSignIn() {
       return Container(
         margin: const EdgeInsets.only(top: 30),
         padding: const EdgeInsets.symmetric(
@@ -53,13 +53,11 @@ class SignUpPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            "Full Name",
             "Email Address",
             "Password",
-            "Hobby",
-            "SignUp",
+            "SignIn",
           ].map<Widget>((e) {
-            if (e == "SignUp") {
+            if (e == "SignIn") {
               return Center(
                 child: BlocConsumer<AuthCubit, AuthState>(
                   listener: (context, state) {
@@ -88,7 +86,7 @@ class SignUpPage extends StatelessWidget {
                       );
                     }
                     return CustomButton(
-                      title: "Get Started",
+                      title: "Sign In",
                       onPressed: () {
                         context.read<AuthCubit>().signUp(
                               email: emailController.text,
@@ -148,16 +146,16 @@ class SignUpPage extends StatelessWidget {
       );
     }
 
-    Widget SignInButton() {
+    Widget SignUpButton() {
       return GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, "/sign-in");
+          Navigator.pop(context);
         },
         child: Container(
           margin: const EdgeInsets.only(top: 50),
           child: Center(
             child: Text(
-              "Have an account? Sign In",
+              "Create New Account",
               style: greyTextStyle.copyWith(
                 fontSize: 16,
                 fontWeight: light,
@@ -178,8 +176,8 @@ class SignUpPage extends StatelessWidget {
           child: ListView(
             children: [
               title(),
-              FormSignUp(),
-              SignInButton(),
+              FormSignIn(),
+              SignUpButton(),
             ],
           ),
         ),
