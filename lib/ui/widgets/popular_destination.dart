@@ -1,8 +1,7 @@
-// ignore_for_file: use_key_in_widget_constructors
-
 import 'package:air_plane/ui/pages/detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
+import 'dart:convert';
 
 class PopularDestination extends StatelessWidget {
   final String imageUrl;
@@ -39,54 +38,60 @@ class PopularDestination extends StatelessWidget {
                 width: 180,
                 height: 220,
                 margin: const EdgeInsets.only(bottom: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(defaultRadius),
-                  image: DecorationImage(
-                    image: AssetImage(imageUrl),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Align(
+                child: Stack(
                   alignment: Alignment.topRight,
-                  child: Container(
-                    width: 55,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: kWhiteColor,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(
-                          defaultRadius,
+                  children: [
+                    ClipRRect(
+                        borderRadius: BorderRadius.circular(defaultRadius),
+                        child: Image.memory(
+                          base64Decode(
+                              imageUrl.split(',').last), // Decode Base64 string
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Icon(
+                                  Icons.broken_image), // Handle decoding errors
+                        )),
+                    Container(
+                      width: 55,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: kWhiteColor,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(
+                            defaultRadius,
+                          ),
                         ),
                       ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 20,
-                          height: 20,
-                          margin: const EdgeInsets.only(right: 2),
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("assets/icon_star.png"),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 20,
+                            height: 20,
+                            margin: const EdgeInsets.only(right: 2),
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage("assets/icon_star.png"),
+                              ),
                             ),
                           ),
-                        ),
-                        Text(
-                          stars,
-                          style: blackTextStyle.copyWith(
-                            fontWeight: medium,
-                          ),
-                        )
-                      ],
+                          Text(
+                            stars,
+                            style: blackTextStyle.copyWith(
+                              fontWeight: medium,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
+                  ],
                 )),
             Container(
               margin: const EdgeInsets.only(left: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     name,
@@ -94,6 +99,8 @@ class PopularDestination extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: semiBold,
                     ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
                   const SizedBox(
                     height: 5,
@@ -103,7 +110,9 @@ class PopularDestination extends StatelessWidget {
                     style: greyTextStyle.copyWith(
                       fontSize: 14,
                     ),
-                  )
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
                 ],
               ),
             )

@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:air_plane/cubit/auth_cubit.dart';
+import 'package:air_plane/models/places_model.dart';
+import 'package:air_plane/services/places_service.dart';
 import 'package:air_plane/ui/widgets/destination_tile.dart';
 import 'package:air_plane/ui/widgets/popular_destination.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,7 @@ import 'package:air_plane/shared/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -65,44 +67,34 @@ class HomePage extends StatelessWidget {
 
     Widget popularDestination() {
       return Container(
-          margin: const EdgeInsets.only(top: 30),
-          child: const SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                PopularDestination(
-                  imageUrl: "assets/image_destination1.png",
-                  name: "Lake Ciliwung",
-                  city: "Tangerang",
-                  stars: "4.8",
+        margin: const EdgeInsets.only(top: 30),
+        child: FutureBuilder<List<PlacesModel>>(
+          future: PlacesService().getPlaces(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('No destinations available'));
+            } else {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: snapshot.data!.map((place) {
+                    return PopularDestination(
+                      imageUrl: place.image,
+                      name: place.name,
+                      city: place.city,
+                      stars: place.rating.toString(),
+                    );
+                  }).toList(),
                 ),
-                PopularDestination(
-                  imageUrl: "assets/image_destination2.png",
-                  name: "White House",
-                  city: "Spain",
-                  stars: "4.7",
-                ),
-                PopularDestination(
-                  imageUrl: "assets/image_destination3.png",
-                  name: "Hill Heyo",
-                  city: "Monaco",
-                  stars: "4.8",
-                ),
-                PopularDestination(
-                  imageUrl: "assets/image_destination4.png",
-                  name: "Menarra",
-                  city: "Japan",
-                  stars: "4.7",
-                ),
-                PopularDestination(
-                  imageUrl: "assets/image_destination5.png",
-                  name: "Payung Teduh",
-                  city: "Singapore",
-                  stars: "4.8",
-                ),
-              ],
-            ),
-          ));
+              );
+            }
+          },
+        ),
+      );
     }
 
     Widget NewDestination() {
