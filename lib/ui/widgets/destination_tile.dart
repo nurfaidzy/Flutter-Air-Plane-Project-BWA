@@ -9,11 +9,13 @@ class destinationTile extends StatelessWidget {
   final String namePlace;
   final String locationPlace;
   final String stars;
+  final int id;
   const destinationTile({
     required this.imageUrl,
     required this.namePlace,
     required this.locationPlace,
     required this.stars,
+    required this.id,
   });
 
   @override
@@ -22,7 +24,9 @@ class destinationTile extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const detailPage(),
+          builder: (context) => detailPage(
+            id: id,
+          ),
         ),
       ),
       child: Container(

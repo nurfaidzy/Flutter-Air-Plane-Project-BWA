@@ -8,7 +8,10 @@ class PopularDestination extends StatelessWidget {
   final String stars;
   final String name;
   final String city;
+  final int id;
   const PopularDestination({
+    super.key,
+    required this.id,
     required this.imageUrl,
     required this.stars,
     required this.name,
@@ -19,8 +22,12 @@ class PopularDestination extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const detailPage()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => detailPage(
+                      id: id,
+                    )));
       },
       child: Container(
         width: 200,

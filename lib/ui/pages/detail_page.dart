@@ -6,7 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
 
 class detailPage extends StatelessWidget {
-  const detailPage({super.key});
+  final int id;
+  detailPage({
+    super.key,
+    required this.id,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -10,7 +10,7 @@ import 'package:air_plane/shared/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +83,7 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   children: snapshot.data!.map((place) {
                     return PopularDestination(
+                      id: place.id,
                       imageUrl: place.image,
                       name: place.name,
                       city: place.city,
@@ -110,30 +111,40 @@ class HomePage extends StatelessWidget {
                     fontWeight: semiBold,
                   )),
               const destinationTile(
-                  imageUrl: "assets/image_destination6.png",
-                  namePlace: "Danau Beratan",
-                  locationPlace: "Singaraja",
-                  stars: "4.8"),
+                imageUrl: "assets/image_destination6.png",
+                namePlace: "Danau Beratan",
+                locationPlace: "Singaraja",
+                stars: "4.8",
+                id: 2,
+              ),
               const destinationTile(
-                  imageUrl: "assets/image_destination7.png",
-                  namePlace: "Sydney Opera",
-                  locationPlace: "Australia",
-                  stars: "4.7"),
+                imageUrl: "assets/image_destination7.png",
+                namePlace: "Sydney Opera",
+                locationPlace: "Australia",
+                stars: "4.7",
+                id: 3,
+              ),
               const destinationTile(
-                  imageUrl: "assets/image_destination8.png",
-                  namePlace: "Roma",
-                  locationPlace: "Italy",
-                  stars: "4.8"),
+                imageUrl: "assets/image_destination8.png",
+                namePlace: "Roma",
+                locationPlace: "Italy",
+                stars: "4.8",
+                id: 4,
+              ),
               const destinationTile(
-                  imageUrl: "assets/image_destination9.png",
-                  namePlace: "Yogyakarta",
-                  locationPlace: "Indonesia",
-                  stars: "4.7"),
+                imageUrl: "assets/image_destination9.png",
+                namePlace: "Yogyakarta",
+                locationPlace: "Indonesia",
+                stars: "4.7",
+                id: 5,
+              ),
               const destinationTile(
-                  imageUrl: "assets/image_destination10.png",
-                  namePlace: "Paris",
-                  locationPlace: "France",
-                  stars: "4.8"),
+                imageUrl: "assets/image_destination10.png",
+                namePlace: "Paris",
+                locationPlace: "France",
+                stars: "4.8",
+                id: 6,
+              ),
             ],
           ));
     }

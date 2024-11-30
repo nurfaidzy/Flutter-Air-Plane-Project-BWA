@@ -149,10 +149,12 @@ class checkoutPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const destinationTile(
-                    imageUrl: "assets/image_destination6.png",
-                    namePlace: "Danau Beratan",
-                    locationPlace: "Singaraja",
-                    stars: "4.8"),
+                  imageUrl: "assets/image_destination6.png",
+                  namePlace: "Danau Beratan",
+                  locationPlace: "Singaraja",
+                  stars: "4.8",
+                  id: 1,
+                ),
                 Container(
                   margin: const EdgeInsets.only(top: 20),
                   child: Text("Booking Details",
