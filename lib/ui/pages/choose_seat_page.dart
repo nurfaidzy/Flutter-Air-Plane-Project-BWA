@@ -99,57 +99,52 @@ class ChooseSeatPage extends StatelessWidget {
     }
 
     Widget seatImage({
-      bool isSelected = false,
-      bool isAvailable = false,
-      bool isUnavailable = false,
+      required BuildContext context,
+      required int position,
+      required int rowSeat,
+      required bool isAvailable,
+      required bool isSelected,
     }) {
       Color colour;
-      if (isSelected) {
-        colour = const Color(0xFF5C40CC);
-      } else if (isAvailable) {
-        colour = const Color(0xFFE0D9FF);
-      } else if (isUnavailable) {
-        colour = const Color(0xFFEBECF1);
+      if (!isAvailable) {
+        colour = const Color(0xFFEBECF1); // Unavailable color
+      } else if (isSelected) {
+        colour = const Color(0xFF5C40CC); // Selected color
       } else {
-        colour =
-            kBackgroundColor; // Add a default color if no condition matches
+        colour = const Color(0xFFE0D9FF); // Available color
       }
 
-      Color borderColour;
-      if (isSelected || isAvailable) {
-        borderColour = const Color(0xFF5C40CC);
-      } else if (isUnavailable) {
-        borderColour = const Color(0xFFEBECF1);
-      } else {
-        borderColour =
-            kBackgroundColor; // Add a default color if no condition matches
-      }
+      Color borderColour =
+          isAvailable ? const Color(0xFF5C40CC) : const Color(0xFFEBECF1);
 
       return Expanded(
         child: Center(
-          child: Container(
-            margin: const EdgeInsets.only(top: 10),
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
+          child: GestureDetector(
+            onTap: isAvailable
+                ? () => context.read<SeatCubit>().setSeat(rowSeat, position)
+                : null,
+            child: Container(
+              margin: const EdgeInsets.only(top: 10),
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
                 color: colour,
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(
                   color: borderColour,
-                )),
-            child: Center(
-              child: isSelected
-                  ? Center(
-                      // Conditionally display text only when isSelected is true
-                      child: Text(
+                ),
+              ),
+              child: Center(
+                child: isSelected
+                    ? Text(
                         "You",
                         style: whiteTextStyle.copyWith(
                           fontSize: 16,
                           fontWeight: medium,
                         ),
-                      ),
-                    )
-                  : null,
+                      )
+                    : null,
+              ),
             ),
           ),
         ),
@@ -160,30 +155,23 @@ class ChooseSeatPage extends StatelessWidget {
       required int rowNumber,
       required Map<int, Map<String, bool>> seatData,
     }) {
+      List<int?> positions = [1, 2, null, 3, 4];
+
       return Row(
-        children: [
-          seatImage(
-            isAvailable: seatData[1]!["isAvailable"]!,
-            isUnavailable: seatData[1]!["isUnavailable"]!,
-            isSelected: seatData[1]!["isSelected"]!,
-          ),
-          seatImage(
-            isAvailable: seatData[2]!["isAvailable"]!,
-            isUnavailable: seatData[2]!["isUnavailable"]!,
-            isSelected: seatData[2]!["isSelected"]!,
-          ),
-          seatTitle(rowNumber.toString()),
-          seatImage(
-            isAvailable: seatData[3]!["isAvailable"]!,
-            isUnavailable: seatData[3]!["isUnavailable"]!,
-            isSelected: seatData[3]!["isSelected"]!,
-          ),
-          seatImage(
-            isAvailable: seatData[4]!["isAvailable"]!,
-            isUnavailable: seatData[4]!["isUnavailable"]!,
-            isSelected: seatData[4]!["isSelected"]!,
-          ),
-        ],
+        children: positions.map((position) {
+          if (position == null) {
+            return seatTitle(rowNumber.toString());
+          } else {
+            Map<String, bool> seatInfo = seatData[position]!;
+            return seatImage(
+              position: position,
+              rowSeat: rowNumber,
+              isAvailable: seatInfo["isAvailable"]!,
+              isSelected: seatInfo["isSelected"]!,
+              context: context,
+            );
+          }
+        }).toList(),
       );
     }
 

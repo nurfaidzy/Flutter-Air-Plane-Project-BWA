@@ -29,7 +29,7 @@ class SeatCubit extends Cubit<Map<int, Map<int, Seat>>> {
       : super({
           1: {
             1: Seat(isAvailable: false, isUnavailable: true, isSelected: false),
-            2: Seat(isAvailable: false, isUnavailable: true, isSelected: false),
+            2: Seat(isAvailable: true, isUnavailable: false, isSelected: false),
             3: Seat(isAvailable: true, isUnavailable: false, isSelected: false),
             4: Seat(isAvailable: false, isUnavailable: true, isSelected: false),
           },
@@ -37,19 +37,19 @@ class SeatCubit extends Cubit<Map<int, Map<int, Seat>>> {
             1: Seat(isAvailable: false, isUnavailable: true, isSelected: false),
             2: Seat(isAvailable: false, isUnavailable: true, isSelected: false),
             3: Seat(isAvailable: true, isUnavailable: false, isSelected: false),
-            4: Seat(isAvailable: false, isUnavailable: true, isSelected: false),
+            4: Seat(isAvailable: true, isUnavailable: false, isSelected: false),
           },
           3: {
-            1: Seat(isAvailable: false, isUnavailable: true, isSelected: false),
+            1: Seat(isAvailable: true, isUnavailable: false, isSelected: false),
             2: Seat(isAvailable: false, isUnavailable: true, isSelected: false),
             3: Seat(isAvailable: true, isUnavailable: false, isSelected: false),
-            4: Seat(isAvailable: false, isUnavailable: true, isSelected: false),
+            4: Seat(isAvailable: true, isUnavailable: false, isSelected: false),
           },
           4: {
-            1: Seat(isAvailable: false, isUnavailable: true, isSelected: false),
-            2: Seat(isAvailable: false, isUnavailable: true, isSelected: false),
-            3: Seat(isAvailable: true, isUnavailable: false, isSelected: false),
-            4: Seat(isAvailable: false, isUnavailable: true, isSelected: false),
+            1: Seat(isAvailable: true, isUnavailable: false, isSelected: false),
+            2: Seat(isAvailable: true, isUnavailable: false, isSelected: false),
+            3: Seat(isAvailable: false, isUnavailable: true, isSelected: false),
+            4: Seat(isAvailable: true, isUnavailable: false, isSelected: false),
           },
         });
 
