@@ -50,8 +50,7 @@ class PlacesModel extends Equatable {
       name: json['name'],
       city: json['city'],
       image: json['image'],
-      rating:
-          (json['rating'] as num).toDouble(), // Convert to double if necessary
+      rating: (json['rating'] as num).toDouble(),
       price: json['price'],
       about: json['about'],
       photos: json['photos'].cast<String>(),

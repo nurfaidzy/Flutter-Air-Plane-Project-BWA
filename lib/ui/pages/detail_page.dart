@@ -1,5 +1,9 @@
 // ignore_for_file: camel_case_types, non_constant_identifier_names
 
+import 'dart:convert';
+
+import 'package:air_plane/models/places_model.dart';
+import 'package:air_plane/services/places_service.dart';
 import 'package:air_plane/ui/pages/choose_seat_page.dart';
 import 'package:air_plane/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +18,15 @@ class detailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget backGroundImage() {
+    Widget backGroundImage({required String image}) {
       return Container(
         width: double.infinity,
         height: 450,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/image_destination1.png"),
+            image: MemoryImage(
+              base64Decode(image.split(',').last),
+            ),
             fit: BoxFit.cover,
           ),
         ),
@@ -28,7 +34,7 @@ class detailPage extends StatelessWidget {
     }
 
     Widget photoSection({
-      required String imageUrl,
+      required String image,
     }) {
       return Container(
         width: 70,
@@ -37,7 +43,9 @@ class detailPage extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
           image: DecorationImage(
-            image: AssetImage(imageUrl),
+            image: MemoryImage(
+              base64Decode(image.split(',').last),
+            ),
             fit: BoxFit.cover,
           ),
         ),
@@ -86,7 +94,41 @@ class detailPage extends StatelessWidget {
       );
     }
 
-    Widget Content() {
+    List<Widget> _buildInterestColumns(List<String> interest,
+        {int numColumns = 2}) {
+      // Initialize a list to hold the interests for each column
+      List<List<String>> columnsData = List.generate(numColumns, (_) => []);
+
+      // Distribute interests into columns in a round-robin fashion
+      for (int i = 0; i < interest.length; i++) {
+        columnsData[i % numColumns].add(interest[i]);
+      }
+
+      // Build the columns wrapped in Expanded widgets
+      return columnsData.map((columnInterests) {
+        return Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (int i = 0; i < columnInterests.length; i++) ...[
+                customChecklis(title: columnInterests[i]),
+                if (i < columnInterests.length - 1) const SizedBox(height: 10),
+              ],
+            ],
+          ),
+        );
+      }).toList();
+    }
+
+    Widget Content({
+      required String name,
+      required String city,
+      required String stars,
+      required String about,
+      required List<String> photos,
+      required List<String> interest,
+      required String price,
+    }) {
       return Container(
         width: double.infinity,
         margin: EdgeInsets.symmetric(horizontal: defaultMargin),
@@ -111,14 +153,14 @@ class detailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Lake Ciliwung",
+                          name,
                           style: whiteTextStyle.copyWith(
                             fontSize: 24,
                             fontWeight: semiBold,
                           ),
                         ),
                         Text(
-                          "Tangerang",
+                          city,
                           style: whiteTextStyle.copyWith(
                             fontSize: 16,
                             fontWeight: light,
@@ -142,7 +184,7 @@ class detailPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '4.5',
+                        stars,
                         style: whiteTextStyle.copyWith(
                           fontWeight: medium,
                         ),
@@ -173,7 +215,7 @@ class detailPage extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    "Lake Ciliwung is a lake located in the area of Tangerang, Banten. This lake is located at an altitude of 1000 meters above sea level. This lake is also very suitable for those of you who like fishing.",
+                    about,
                     style: blackTextStyle.copyWith(
                       fontWeight: regular,
                       // interface use by iphone 16 layout make space so far
@@ -194,11 +236,10 @@ class detailPage extends StatelessWidget {
                     height: 6,
                   ),
                   Row(
-                    children: [
-                      photoSection(imageUrl: "assets/image_photo1.png"),
-                      photoSection(imageUrl: "assets/image_photo2.png"),
-                      photoSection(imageUrl: "assets/image_photo3.png"),
-                    ],
+                    children: photos
+                        .take(3)
+                        .map((photo) => photoSection(image: photo))
+                        .toList(),
                   ),
                   const SizedBox(
                     height: 20,
@@ -215,28 +256,7 @@ class detailPage extends StatelessWidget {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          customChecklis(title: "Kids Park"),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          customChecklis(title: "City Museum"),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          customChecklis(title: "Honor Bridge"),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          customChecklis(title: "Central Mall"),
-                        ],
-                      )
-                    ],
+                    children: _buildInterestColumns(interest, numColumns: 2),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 20),
@@ -248,7 +268,7 @@ class detailPage extends StatelessWidget {
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("IDR 2.500.000",
+                                  Text("IDR $price",
                                       style: blackTextStyle.copyWith(
                                         fontSize: 18,
                                         fontWeight: medium,
@@ -286,15 +306,50 @@ class detailPage extends StatelessWidget {
     }
 
     return Scaffold(
-        backgroundColor: kWhiteColor,
-        body: SingleChildScrollView(
-          child: Stack(
-            children: [
-              backGroundImage(),
-              customShaddow(),
-              Content(),
-            ],
-          ),
-        ));
+      backgroundColor: kWhiteColor,
+      body: SingleChildScrollView(
+        child: FutureBuilder<PlacesModel>(
+          future: PlacesService().getPlaceById(id.toString()),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // While the future is loading, show a loading indicator
+              return Container(
+                margin: const EdgeInsets.only(top: 500),
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            } else if (snapshot.hasError) {
+              // If there is an error, display an error message
+              return Center(
+                child: Text('An error occurred: ${snapshot.error}'),
+              );
+            } else if (snapshot.hasData && snapshot.data != null) {
+              // When data is available, build the UI
+              return Stack(
+                children: [
+                  backGroundImage(image: snapshot.data!.image),
+                  customShaddow(),
+                  Content(
+                    name: snapshot.data!.name,
+                    city: snapshot.data!.city,
+                    stars: snapshot.data!.rating.toString(),
+                    about: snapshot.data!.about,
+                    photos: snapshot.data!.photos,
+                    interest: snapshot.data!.interest,
+                    price: snapshot.data!.price.toString(),
+                  ),
+                ],
+              );
+            } else {
+              // Handle the case when there's no data
+              return Center(
+                child: Text('No data found'),
+              );
+            }
+          },
+        ),
+      ),
+    );
   }
 }
