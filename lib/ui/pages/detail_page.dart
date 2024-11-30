@@ -289,7 +289,7 @@ class detailPage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const choseSeatPage()));
+                                          const ChooseSeatPage()));
                             },
                             width: 170,
                           ),

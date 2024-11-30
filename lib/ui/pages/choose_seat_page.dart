@@ -1,12 +1,14 @@
 // ignore_for_file: camel_case_types
 
+import 'package:air_plane/cubit/seat_cubit.dart';
 import 'package:air_plane/ui/pages/checkout_page.dart';
 import 'package:air_plane/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class choseSeatPage extends StatelessWidget {
-  const choseSeatPage({super.key});
+class ChooseSeatPage extends StatelessWidget {
+  const ChooseSeatPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -154,119 +156,6 @@ class choseSeatPage extends StatelessWidget {
       );
     }
 
-    const mockSeatData = {
-      1: {
-        1: {
-          "isAvailable": false,
-          "isUnavailable": true,
-          "isSelected": false,
-        },
-        2: {
-          "isAvailable": false,
-          "isUnavailable": true,
-          "isSelected": false,
-        },
-        3: {
-          "isAvailable": true,
-          "isUnavailable": false,
-          "isSelected": false,
-        },
-        4: {
-          "isAvailable": false,
-          "isUnavailable": true,
-          "isSelected": false,
-        },
-      },
-      2: {
-        1: {
-          "isAvailable": true,
-          "isUnavailable": false,
-          "isSelected": false,
-        },
-        2: {
-          "isAvailable": true,
-          "isUnavailable": false,
-          "isSelected": false,
-        },
-        3: {
-          "isAvailable": true,
-          "isUnavailable": false,
-          "isSelected": false,
-        },
-        4: {
-          "isAvailable": false,
-          "isUnavailable": true,
-          "isSelected": false,
-        },
-      },
-      3: {
-        1: {
-          "isAvailable": true,
-          "isUnavailable": false,
-          "isSelected": true,
-        },
-        2: {
-          "isAvailable": true,
-          "isUnavailable": false,
-          "isSelected": true,
-        },
-        3: {
-          "isAvailable": true,
-          "isUnavailable": false,
-          "isSelected": false,
-        },
-        4: {
-          "isAvailable": true,
-          "isUnavailable": false,
-          "isSelected": false,
-        },
-      },
-      4: {
-        1: {
-          "isAvailable": true,
-          "isUnavailable": false,
-          "isSelected": false,
-        },
-        2: {
-          "isAvailable": false,
-          "isUnavailable": true,
-          "isSelected": false,
-        },
-        3: {
-          "isAvailable": true,
-          "isUnavailable": false,
-          "isSelected": false,
-        },
-        4: {
-          "isAvailable": true,
-          "isUnavailable": false,
-          "isSelected": false,
-        },
-      },
-      5: {
-        1: {
-          "isAvailable": true,
-          "isUnavailable": false,
-          "isSelected": false,
-        },
-        2: {
-          "isAvailable": true,
-          "isUnavailable": false,
-          "isSelected": false,
-        },
-        3: {
-          "isAvailable": false,
-          "isUnavailable": true,
-          "isSelected": false,
-        },
-        4: {
-          "isAvailable": true,
-          "isUnavailable": false,
-          "isSelected": false,
-        },
-      }
-    };
-
     Widget warpImageSeat({
       required int rowNumber,
       required Map<int, Map<String, bool>> seatData,
@@ -299,63 +188,72 @@ class choseSeatPage extends StatelessWidget {
     }
 
     Widget selectSeat() {
-      return Container(
-        margin: const EdgeInsets.only(top: 30),
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 22,
-          vertical: 30,
-        ),
-        decoration: BoxDecoration(
-          color: kWhiteColor,
-          borderRadius: BorderRadius.circular(defaultRadius),
-        ),
-        child: Column(
-          children: [
-            warpTitleSeat(),
-            ...mockSeatData.entries.map((entry) => warpImageSeat(
-                  rowNumber: entry.key,
-                  seatData: entry.value,
-                )),
-            Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 30,
-                ),
-                child: Column(children: [
-                  Row(
-                    children: [
-                      Expanded(
-                          child: Text("Your seat",
+      return BlocBuilder<SeatCubit, Map<int, Map<int, Seat>>>(
+        builder: (context, state) {
+          return Container(
+            margin: const EdgeInsets.only(top: 30),
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 22,
+              vertical: 30,
+            ),
+            decoration: BoxDecoration(
+              color: kWhiteColor,
+              borderRadius: BorderRadius.circular(defaultRadius),
+            ),
+            child: Column(
+              children: [
+                warpTitleSeat(),
+                ...state.entries.map((entry) => warpImageSeat(
+                      rowNumber: entry.key,
+                      seatData: entry.value
+                          .map((seatNumber, seat) => MapEntry(seatNumber, {
+                                "isAvailable": seat.isAvailable,
+                                "isUnavailable": !seat.isAvailable,
+                                "isSelected": seat.isSelected,
+                              })),
+                    )),
+                Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 30,
+                    ),
+                    child: Column(children: [
+                      Row(
+                        children: [
+                          Expanded(
+                              child: Text("Your seat",
+                                  style: blackTextStyle.copyWith(
+                                      fontWeight: light, color: kGreyColor))),
+                          Text("A3, B3",
                               style: blackTextStyle.copyWith(
-                                  fontWeight: light, color: kGreyColor))),
-                      Text("A3, B3",
-                          style: blackTextStyle.copyWith(
-                            fontSize: 16,
-                            fontWeight: medium,
-                          ))
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: Text("data",
+                                fontSize: 16,
+                                fontWeight: medium,
+                              ))
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: Text("data",
+                                  style: blackTextStyle.copyWith(
+                                      fontWeight: light, color: kGreyColor))),
+                          Text("IDR 540.000.000",
                               style: blackTextStyle.copyWith(
-                                  fontWeight: light, color: kGreyColor))),
-                      Text("IDR 540.000.000",
-                          style: blackTextStyle.copyWith(
-                            fontSize: 16,
-                            color: kPrimaryColor,
-                            fontWeight: semiBold,
-                          ))
-                    ],
-                  ),
-                ]))
-          ],
-        ),
+                                fontSize: 16,
+                                color: kPrimaryColor,
+                                fontWeight: semiBold,
+                              ))
+                        ],
+                      ),
+                    ]))
+              ],
+            ),
+          );
+        },
       );
     }
 
