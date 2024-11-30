@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:air_plane/models/places_model.dart';
 import 'package:http/http.dart' as http;
 
+const String host = "http://localhost:3000";
+
 class PlacesService {
-  final String host = "http://localhost:3000";
   Future<List<PlacesModel>> getPlaces() async {
     try {
       var response = await http.get(Uri.parse("$host/list"));
@@ -14,6 +15,20 @@ class PlacesService {
         return data.map((e) => PlacesModel.fromJson(e)).toList();
       } else {
         throw Exception("Failed to load places");
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<PlacesModel> getPlaceById(String id) async {
+    try {
+      var response = await http.get(Uri.parse("$host/$id"));
+      if (response.statusCode == 200) {
+        Map<String, dynamic> json = jsonDecode(response.body);
+        return PlacesModel.fromJsonDetail(json['data']);
+      } else {
+        throw Exception("Failed to load place");
       }
     } catch (e) {
       throw e;

@@ -7,6 +7,9 @@ class PlacesModel extends Equatable {
   final String image;
   final double rating;
   final int price;
+  final String about;
+  final List<String> photos;
+  final List<String> interest;
 
   const PlacesModel({
     required this.id,
@@ -15,6 +18,17 @@ class PlacesModel extends Equatable {
     required this.image,
     required this.rating,
     required this.price,
+    this.about = '',
+    this.photos = const [
+      'assets/icon_plane.png',
+      'assets/icon_plane.png',
+      'assets/icon_plane.png',
+    ],
+    this.interest = const [
+      'Kids Park',
+      'City Museum',
+      'Central Mall',
+    ],
   });
 
   // Add: Factory constructor to create an instance from JSON
@@ -27,6 +41,21 @@ class PlacesModel extends Equatable {
       rating:
           (json['rating'] as num).toDouble(), // Convert to double if necessary
       price: json['price'],
+    );
+  }
+  // for Detail
+  factory PlacesModel.fromJsonDetail(Map<String, dynamic> json) {
+    return PlacesModel(
+      id: json['id'],
+      name: json['name'],
+      city: json['city'],
+      image: json['image'],
+      rating:
+          (json['rating'] as num).toDouble(), // Convert to double if necessary
+      price: json['price'],
+      about: json['about'],
+      photos: json['photos'].cast<String>(),
+      interest: json['interest'].cast<String>(),
     );
   }
 
