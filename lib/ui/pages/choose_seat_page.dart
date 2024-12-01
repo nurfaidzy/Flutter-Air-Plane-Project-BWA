@@ -1,14 +1,23 @@
 // ignore_for_file: camel_case_types
 
+import 'dart:ffi';
+
 import 'package:air_plane/cubit/seat_cubit.dart';
 import 'package:air_plane/ui/pages/checkout_page.dart';
 import 'package:air_plane/ui/widgets/custom_button.dart';
+import 'package:air_plane/ui/widgets/moneySparator.dart';
 import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChooseSeatPage extends StatelessWidget {
-  const ChooseSeatPage({super.key});
+  final int id;
+  final int price;
+  const ChooseSeatPage({
+    super.key,
+    required this.id,
+    required this.price,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -175,6 +184,20 @@ class ChooseSeatPage extends StatelessWidget {
       );
     }
 
+    int countSelectedSeat(
+      Map<int, Map<int, Seat>> state,
+    ) {
+      int count = 0;
+      state.forEach((rowKey, seats) {
+        seats.forEach((seatKey, seat) {
+          if (seat.isSelected) {
+            count++;
+          }
+        });
+      });
+      return count;
+    }
+
     Widget selectSeat() {
       return BlocBuilder<SeatCubit, Map<int, Map<int, Seat>>>(
         builder: (context, state) {
@@ -229,7 +252,8 @@ class ChooseSeatPage extends StatelessWidget {
                               child: Text("data",
                                   style: blackTextStyle.copyWith(
                                       fontWeight: light, color: kGreyColor))),
-                          Text("IDR 540.000.000",
+                          Text(
+                              "IDR ${moneySeparator(price * countSelectedSeat(state))}",
                               style: blackTextStyle.copyWith(
                                 fontSize: 16,
                                 color: kPrimaryColor,

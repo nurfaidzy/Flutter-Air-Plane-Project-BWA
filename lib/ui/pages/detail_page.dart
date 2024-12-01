@@ -6,6 +6,7 @@ import 'package:air_plane/models/places_model.dart';
 import 'package:air_plane/services/places_service.dart';
 import 'package:air_plane/ui/pages/choose_seat_page.dart';
 import 'package:air_plane/ui/widgets/custom_button.dart';
+import 'package:air_plane/ui/widgets/moneySparator.dart';
 import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
 
@@ -268,7 +269,8 @@ class detailPage extends StatelessWidget {
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("IDR $price",
+                                  Text(
+                                      "IDR ${moneySeparator(int.parse(price))}",
                                       style: blackTextStyle.copyWith(
                                         fontSize: 18,
                                         fontWeight: medium,
@@ -288,8 +290,10 @@ class detailPage extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ChooseSeatPage()));
+                                      builder: (context) => ChooseSeatPage(
+                                            id: id,
+                                            price: int.parse(price),
+                                          )));
                             },
                             width: 170,
                           ),
@@ -343,7 +347,7 @@ class detailPage extends StatelessWidget {
               );
             } else {
               // Handle the case when there's no data
-              return Center(
+              return const Center(
                 child: Text('No data found'),
               );
             }
