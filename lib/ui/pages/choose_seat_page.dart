@@ -1,7 +1,3 @@
-// ignore_for_file: camel_case_types
-
-import 'dart:ffi';
-
 import 'package:air_plane/cubit/seat_cubit.dart';
 import 'package:air_plane/ui/pages/checkout_page.dart';
 import 'package:air_plane/ui/widgets/custom_button.dart';
@@ -198,6 +194,28 @@ class ChooseSeatPage extends StatelessWidget {
       return count;
     }
 
+    String yourSeat(
+      Map<int, Map<int, Seat>> state,
+    ) {
+      List<String> seats = [];
+      state.forEach((rowKey, rowSeats) {
+        rowSeats.forEach((seatKey, seat) {
+          if (seat.isSelected) {
+            if (seatKey == 1) {
+              seats.add("${rowKey}A");
+            } else if (seatKey == 2) {
+              seats.add("${rowKey}B");
+            } else if (seatKey == 3) {
+              seats.add("${rowKey}D");
+            } else if (seatKey == 4) {
+              seats.add("${rowKey}E");
+            }
+          }
+        });
+      });
+      return seats.join(", ");
+    }
+
     Widget selectSeat() {
       return BlocBuilder<SeatCubit, Map<int, Map<int, Seat>>>(
         builder: (context, state) {
@@ -236,7 +254,7 @@ class ChooseSeatPage extends StatelessWidget {
                               child: Text("Your seat",
                                   style: blackTextStyle.copyWith(
                                       fontWeight: light, color: kGreyColor))),
-                          Text("A3, B3",
+                          Text(yourSeat(state),
                               style: blackTextStyle.copyWith(
                                 fontSize: 16,
                                 fontWeight: medium,
