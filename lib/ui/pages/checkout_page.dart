@@ -3,14 +3,30 @@
 import 'package:air_plane/ui/pages/success_checkout.dart';
 import 'package:air_plane/ui/widgets/custom_button.dart';
 import 'package:air_plane/ui/widgets/destination_tile.dart';
+import 'package:air_plane/ui/widgets/moneySparator.dart';
 import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
 
 class checkoutPage extends StatelessWidget {
-  const checkoutPage({super.key});
+  final int idDestination;
+  final List<String> selectedSeats;
+  final int price;
+  final int grandTotal;
+  const checkoutPage({
+    super.key,
+    required this.idDestination,
+    required this.selectedSeats,
+    required this.price,
+    required this.grandTotal,
+  });
 
   @override
   Widget build(BuildContext context) {
+    print("idDestination: $idDestination");
+    print("selectedSeats: $selectedSeats");
+    print("price: $price");
+    print("grandTotal: $grandTotal");
+
     Widget imageHeader() {
       return Container(
         margin: const EdgeInsets.only(top: 50),
@@ -114,19 +130,31 @@ class checkoutPage extends StatelessWidget {
       );
     }
 
+    String cleanTextSeat(String text) {
+      return text.replaceAll("[", "").replaceAll("]", "");
+    }
+
     Widget bookingDetail() {
       return Column(
         children: [
-          detailItem(title: "Traveler", value: "2 person", color: kBlackColor),
-          detailItem(title: "Seat", value: "A3, B3", color: kBlackColor),
+          detailItem(
+              title: "Traveler",
+              value: "${selectedSeats.length} person",
+              color: kBlackColor),
+          detailItem(
+              title: "Seat",
+              value: cleanTextSeat(selectedSeats.toString()),
+              color: kBlackColor),
           detailItem(title: "Insurance", value: "YES", color: kGreenColor),
           detailItem(title: "Refundable", value: "NO", color: kRedColor),
           detailItem(title: "VAT", value: "45%", color: kBlackColor),
           detailItem(
-              title: "Price", value: "IDR 1.200.000", color: kBlackColor),
+              title: "Price",
+              value: "IDR ${moneySeparator(price)}",
+              color: kBlackColor),
           detailItem(
               title: "Grand Total",
-              value: "IDR 1.200.000",
+              value: "IDR ${moneySeparator(price * selectedSeats.length)}",
               color: kPrimaryColor),
         ],
       );

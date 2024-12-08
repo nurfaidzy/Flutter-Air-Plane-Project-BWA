@@ -303,8 +303,18 @@ class ChooseSeatPage extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const checkoutPage()));
-              })
+                      builder: (context) => checkoutPage(
+                        idDestination: id,
+                        price: price,
+                        selectedSeats: yourSeat(context.read<SeatCubit>().state)
+                            .split(", ")
+                            .map((e) => e.toString())
+                            .toList(),
+                        grandTotal: price *
+                            countSelectedSeat(context.read<SeatCubit>().state),
+                      ),
+                    ));
+              }),
         ],
       ),
     );
