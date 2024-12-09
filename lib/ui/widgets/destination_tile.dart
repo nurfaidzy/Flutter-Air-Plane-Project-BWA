@@ -76,7 +76,7 @@ class destinationTile extends StatelessWidget {
             ),
             Expanded(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(

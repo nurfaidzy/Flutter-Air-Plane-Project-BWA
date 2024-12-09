@@ -1,6 +1,8 @@
 // ignore_for_file: camel_case_types
 
+import 'package:air_plane/models/checkout_model.dart';
 import 'package:air_plane/models/places_model.dart';
+import 'package:air_plane/services/checkout_service.dart';
 import 'package:air_plane/services/places_service.dart';
 import 'package:air_plane/ui/pages/success_checkout.dart';
 import 'package:air_plane/ui/widgets/custom_button.dart';
@@ -291,10 +293,32 @@ class checkoutPage extends StatelessWidget {
           paymentDetails(),
           CustomButton(
             title: "Pay Now",
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const SuccessCheckout();
-              }));
+            onPressed: () async {
+              try {
+                await CheckoutService().setCheckout(CheckoutModel(
+                  id: "", // Ensure this is generated or valid
+                  idDestination: idDestination,
+                  totalTraveler: selectedSeats.length,
+                  selectedSeats: selectedSeats,
+                  insurance: true,
+                  refundable: false,
+                  vat: 45,
+                  price: price,
+                  grandTotal: price * selectedSeats.length,
+                ));
+                // Navigate to Success Page if successful
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const SuccessCheckout();
+                }));
+              } catch (e) {
+                // Handle error (e.g., show a dialog or snackbar)
+                debugPrint("Checkout error: $e");
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Text(
+                          "Failed to process checkout. Please try again.")),
+                );
+              }
             },
           ),
           Container(

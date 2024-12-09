@@ -2,9 +2,9 @@ import 'package:equatable/equatable.dart';
 
 class CheckoutModel extends Equatable {
   final String id;
-  final String idDestination;
+  final int idDestination;
   final int totalTraveler;
-  final String selectedSeats;
+  final List<String> selectedSeats;
   final bool insurance;
   final bool refundable;
   final int vat;

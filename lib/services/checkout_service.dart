@@ -7,7 +7,10 @@ class CheckoutService {
 
   Future<void> setCheckout(CheckoutModel checkout) async {
     try {
-      await _checkoutReference.doc(checkout.id).set({
+      String documentId =
+          checkout.id.isEmpty ? _checkoutReference.doc().id : checkout.id;
+
+      await _checkoutReference.doc(documentId).set({
         'idDestination': checkout.idDestination,
         'totalTraveler': checkout.totalTraveler,
         'selectedSeats': checkout.selectedSeats,
@@ -18,18 +21,21 @@ class CheckoutService {
         'grandTotal': checkout.grandTotal,
       });
     } catch (e) {
-      throw e;
+      throw Exception("Failed to set checkout. Please try again later.");
     }
   }
 
   Future<CheckoutModel> getCheckout(String id) async {
     try {
       DocumentSnapshot snapshot = await _checkoutReference.doc(id).get();
+      if (!snapshot.exists) {
+        throw Exception("No checkout found with ID: $id");
+      }
       return CheckoutModel(
         id: id,
         idDestination: snapshot['idDestination'],
         totalTraveler: snapshot['totalTraveler'],
-        selectedSeats: snapshot['selectedSeats'],
+        selectedSeats: List<String>.from(snapshot['selectedSeats']),
         insurance: snapshot['insurance'],
         refundable: snapshot['refundable'],
         vat: snapshot['vat'],
@@ -37,7 +43,7 @@ class CheckoutService {
         grandTotal: snapshot['grandTotal'],
       );
     } catch (e) {
-      throw e;
+      throw Exception("Failed to retrieve checkout. Please try again later.");
     }
   }
 }
