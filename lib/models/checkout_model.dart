@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class CheckoutModel extends Equatable {
   final String id;
+  final String userId;
   final int idDestination;
   final int totalTraveler;
   final List<String> selectedSeats;
@@ -13,6 +14,7 @@ class CheckoutModel extends Equatable {
 
   CheckoutModel({
     required this.id,
+    required this.userId,
     required this.idDestination,
     required this.totalTraveler,
     required this.selectedSeats,
@@ -26,6 +28,7 @@ class CheckoutModel extends Equatable {
   @override
   List<Object?> get props => [
         id,
+        userId,
         idDestination,
         totalTraveler,
         selectedSeats,

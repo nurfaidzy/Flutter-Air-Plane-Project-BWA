@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types
 
+import 'package:air_plane/cubit/auth_cubit.dart';
 import 'package:air_plane/models/checkout_model.dart';
 import 'package:air_plane/models/places_model.dart';
 import 'package:air_plane/services/checkout_service.dart';
@@ -10,6 +11,7 @@ import 'package:air_plane/ui/widgets/destination_tile.dart';
 import 'package:air_plane/ui/widgets/moneySparator.dart';
 import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class checkoutPage extends StatelessWidget {
   final int idDestination;
@@ -184,7 +186,8 @@ class checkoutPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       destinationTile(
-                        imageUrl: snapshot.data?.image ?? "",
+                        imageUrl: snapshot.data?.image ??
+                            "assets/icon_unavailable.png",
                         namePlace: snapshot.data?.name ?? "",
                         locationPlace: snapshot.data?.city ?? "",
                         stars: "4.8",
@@ -282,57 +285,63 @@ class checkoutPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      body: ListView(
-        padding: EdgeInsets.symmetric(
-          horizontal: defaultMargin,
-        ),
-        children: [
-          imageHeader(),
-          initialPlace(),
-          boxDetailPayment(),
-          paymentDetails(),
-          CustomButton(
-            title: "Pay Now",
-            onPressed: () async {
-              try {
-                await CheckoutService().setCheckout(CheckoutModel(
-                  id: "", // Ensure this is generated or valid
-                  idDestination: idDestination,
-                  totalTraveler: selectedSeats.length,
-                  selectedSeats: selectedSeats,
-                  insurance: true,
-                  refundable: false,
-                  vat: 45,
-                  price: price,
-                  grandTotal: price * selectedSeats.length,
-                ));
-                // Navigate to Success Page if successful
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const SuccessCheckout();
-                }));
-              } catch (e) {
-                // Handle error (e.g., show a dialog or snackbar)
-                debugPrint("Checkout error: $e");
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                      content: Text(
-                          "Failed to process checkout. Please try again.")),
-                );
-              }
-            },
-          ),
-          Container(
-            padding: const EdgeInsets.only(top: 30, bottom: 30),
-            child: Center(
-              child: Text("Terms and Conditions",
-                  style: greyTextStyle.copyWith(
-                    fontSize: 14,
-                    fontWeight: light,
-                    decoration: TextDecoration.underline,
-                  )),
+      body: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) {
+          return ListView(
+            padding: EdgeInsets.symmetric(
+              horizontal: defaultMargin,
             ),
-          ),
-        ],
+            children: [
+              imageHeader(),
+              initialPlace(),
+              boxDetailPayment(),
+              paymentDetails(),
+              CustomButton(
+                title: "Pay Now",
+                onPressed: () async {
+                  try {
+                    await CheckoutService().setCheckout(CheckoutModel(
+                      id: "",
+                      userId: state is AuthSuccess ? state.user.id : '',
+                      idDestination: idDestination,
+                      totalTraveler: selectedSeats.length,
+                      selectedSeats: selectedSeats,
+                      insurance: true,
+                      refundable: false,
+                      vat: 45,
+                      price: price,
+                      grandTotal: price * selectedSeats.length,
+                    ));
+                    // Navigate to Success Page if successful
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const SuccessCheckout();
+                    }));
+                  } catch (e) {
+                    // Handle error (e.g., show a dialog or snackbar)
+                    debugPrint("Checkout error: $e");
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content: Text(
+                              "Failed to process checkout. Please try again.")),
+                    );
+                  }
+                },
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 30, bottom: 30),
+                child: Center(
+                  child: Text("Terms and Conditions",
+                      style: greyTextStyle.copyWith(
+                        fontSize: 14,
+                        fontWeight: light,
+                        decoration: TextDecoration.underline,
+                      )),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

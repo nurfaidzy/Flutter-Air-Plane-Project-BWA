@@ -65,11 +65,18 @@ class destinationTile extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(namePlace,
+                SizedBox(
+                  width: 160,
+                  child: Text(
+                    namePlace,
                     style: blackTextStyle.copyWith(
                       fontSize: 18,
                       fontWeight: semiBold,
-                    )),
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
                 Text(locationPlace,
                     style: greyTextStyle.copyWith(fontSize: 14)),
               ],

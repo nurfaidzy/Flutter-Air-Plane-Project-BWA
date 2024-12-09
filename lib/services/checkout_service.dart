@@ -11,6 +11,7 @@ class CheckoutService {
           checkout.id.isEmpty ? _checkoutReference.doc().id : checkout.id;
 
       await _checkoutReference.doc(documentId).set({
+        'userId': checkout.userId,
         'idDestination': checkout.idDestination,
         'totalTraveler': checkout.totalTraveler,
         'selectedSeats': checkout.selectedSeats,
@@ -33,6 +34,7 @@ class CheckoutService {
       }
       return CheckoutModel(
         id: id,
+        userId: snapshot['userId'],
         idDestination: snapshot['idDestination'],
         totalTraveler: snapshot['totalTraveler'],
         selectedSeats: List<String>.from(snapshot['selectedSeats']),
