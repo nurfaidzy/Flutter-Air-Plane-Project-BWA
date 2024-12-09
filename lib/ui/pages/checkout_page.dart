@@ -1,5 +1,7 @@
 // ignore_for_file: camel_case_types
 
+import 'package:air_plane/models/places_model.dart';
+import 'package:air_plane/services/places_service.dart';
 import 'package:air_plane/ui/pages/success_checkout.dart';
 import 'package:air_plane/ui/widgets/custom_button.dart';
 import 'package:air_plane/ui/widgets/destination_tile.dart';
@@ -173,27 +175,31 @@ class checkoutPage extends StatelessWidget {
               horizontal: 20,
               vertical: 30,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const destinationTile(
-                  imageUrl: "assets/image_destination6.png",
-                  namePlace: "Danau Beratan",
-                  locationPlace: "Singaraja",
-                  stars: "4.8",
-                  id: 1,
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  child: Text("Booking Details",
-                      style: blackTextStyle.copyWith(
-                        fontSize: 16,
-                        fontWeight: semiBold,
-                      )),
-                ),
-                bookingDetail(),
-              ],
-            ),
+            child: FutureBuilder<PlacesModel>(
+                future: PlacesService().getPlaceById(idDestination),
+                builder: (context, snapshot) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      destinationTile(
+                        imageUrl: snapshot.data?.image ?? "",
+                        namePlace: snapshot.data?.name ?? "",
+                        locationPlace: snapshot.data?.city ?? "",
+                        stars: "4.8",
+                        id: snapshot.data?.id ?? 0,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        child: Text("Booking Details",
+                            style: blackTextStyle.copyWith(
+                              fontSize: 16,
+                              fontWeight: semiBold,
+                            )),
+                      ),
+                      bookingDetail(),
+                    ],
+                  );
+                }),
           ),
         ),
       );

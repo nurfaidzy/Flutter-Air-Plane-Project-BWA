@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:air_plane/models/places_model.dart';
 import 'package:http/http.dart' as http;
@@ -21,7 +22,7 @@ class PlacesService {
     }
   }
 
-  Future<PlacesModel> getPlaceById(String id) async {
+  Future<PlacesModel> getPlaceById(int id) async {
     try {
       var response = await http.get(Uri.parse("$host/$id"));
       if (response.statusCode == 200) {

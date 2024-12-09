@@ -313,7 +313,7 @@ class detailPage extends StatelessWidget {
       backgroundColor: kWhiteColor,
       body: SingleChildScrollView(
         child: FutureBuilder<PlacesModel>(
-          future: PlacesService().getPlaceById(id.toString()),
+          future: PlacesService().getPlaceById(id),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               // While the future is loading, show a loading indicator

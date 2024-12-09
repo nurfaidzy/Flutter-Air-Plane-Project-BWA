@@ -1,5 +1,7 @@
 // ignore_for_file: camel_case_types, use_key_in_widget_constructors
 
+import 'dart:convert';
+
 import 'package:air_plane/ui/pages/detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:air_plane/shared/theme.dart';
@@ -17,6 +19,10 @@ class destinationTile extends StatelessWidget {
     required this.stars,
     required this.id,
   });
+
+  bool isBase64(String url) {
+    return url.startsWith('data:image/');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +53,11 @@ class destinationTile extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18),
                 image: DecorationImage(
-                  image: AssetImage(imageUrl),
+                  image: isBase64(imageUrl)
+                      ? MemoryImage(
+                          base64Decode(imageUrl.split(',').last),
+                        ) as ImageProvider<Object>
+                      : AssetImage(imageUrl) as ImageProvider<Object>,
                   fit: BoxFit.cover,
                 ),
               ),
