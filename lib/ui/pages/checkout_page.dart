@@ -28,11 +28,6 @@ class checkoutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("idDestination: $idDestination");
-    print("selectedSeats: $selectedSeats");
-    print("price: $price");
-    print("grandTotal: $grandTotal");
-
     Widget imageHeader() {
       return Container(
         margin: const EdgeInsets.only(top: 50),
@@ -318,8 +313,6 @@ class checkoutPage extends StatelessWidget {
                       return const SuccessCheckout();
                     }));
                   } catch (e) {
-                    // Handle error (e.g., show a dialog or snackbar)
-                    debugPrint("Checkout error: $e");
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                           content: Text(

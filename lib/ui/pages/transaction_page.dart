@@ -106,11 +106,11 @@ class TranscationPage extends StatelessWidget {
               return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text("Something went wrong: ${snapshot.error}");
-            } else if (!snapshot.hasData) {
-              // No data returned
-              return const Text("No Data");
+            } else if (snapshot.data?.length == 0) {
+              return const Center(
+                child: Text("Empty Transaction"),
+              );
             } else {
-              // We have data!
               var data = snapshot.data;
               return ListView.builder(
                 itemCount: data?.length,

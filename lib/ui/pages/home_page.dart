@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          "Howdy, \n${state is AuthSuccess ? (state as AuthSuccess).user.name : ""}",
+                          "How your day, \n${state is AuthSuccess ? (state as AuthSuccess).user.name : ""}",
                           style: blackTextStyle.copyWith(
                             fontSize: 24,
                             fontWeight: semiBold,
