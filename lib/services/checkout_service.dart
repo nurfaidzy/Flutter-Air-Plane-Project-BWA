@@ -26,26 +26,33 @@ class CheckoutService {
     }
   }
 
-  Future<CheckoutModel> getCheckout(String id) async {
+  Future<List<CheckoutModel>> getCheckoutsByUserId(String userId) async {
     try {
-      DocumentSnapshot snapshot = await _checkoutReference.doc(id).get();
-      if (!snapshot.exists) {
-        throw Exception("No checkout found with ID: $id");
+      QuerySnapshot querySnapshot =
+          await _checkoutReference.where('userId', isEqualTo: userId).get();
+
+      if (querySnapshot.docs.isEmpty) {
+        // No documents found for the given userId
+        return [];
       }
-      return CheckoutModel(
-        id: id,
-        userId: snapshot['userId'],
-        idDestination: snapshot['idDestination'],
-        totalTraveler: snapshot['totalTraveler'],
-        selectedSeats: List<String>.from(snapshot['selectedSeats']),
-        insurance: snapshot['insurance'],
-        refundable: snapshot['refundable'],
-        vat: snapshot['vat'],
-        price: snapshot['price'],
-        grandTotal: snapshot['grandTotal'],
-      );
+
+      // Convert each document to a CheckoutModel
+      return querySnapshot.docs.map((doc) {
+        return CheckoutModel(
+          id: doc.id,
+          userId: doc['userId'],
+          idDestination: doc['idDestination'],
+          totalTraveler: doc['totalTraveler'],
+          selectedSeats: List<String>.from(doc['selectedSeats']),
+          insurance: doc['insurance'],
+          refundable: doc['refundable'],
+          vat: doc['vat'],
+          price: doc['price'],
+          grandTotal: doc['grandTotal'],
+        );
+      }).toList();
     } catch (e) {
-      throw Exception("Failed to retrieve checkout. Please try again later.");
+      throw Exception("Failed to retrieve checkouts for userId $userId: $e");
     }
   }
 }
