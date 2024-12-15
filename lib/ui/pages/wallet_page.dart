@@ -1,5 +1,6 @@
 import 'package:air_plane/cubit/auth_cubit.dart';
 import 'package:air_plane/shared/theme.dart';
+import 'package:air_plane/ui/widgets/moneySparator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -79,7 +80,9 @@ class WalletPage extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  state is AuthSuccess ? (state).user.balance.toString() : "",
+                  state is AuthSuccess
+                      ? "Rp. ${moneySeparator((state).user.balance as int)}"
+                      : "0",
                   style: whiteTextStyle.copyWith(
                     fontWeight: medium,
                     fontSize: 26,

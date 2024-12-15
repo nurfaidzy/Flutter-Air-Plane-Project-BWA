@@ -3,6 +3,7 @@
 import 'package:air_plane/cubit/auth_cubit.dart';
 import 'package:air_plane/shared/theme.dart';
 import 'package:air_plane/ui/widgets/custom_button.dart';
+import 'package:air_plane/ui/widgets/moneySparator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -68,7 +69,7 @@ class BonusPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 41,
+                height: 28,
               ),
               Align(
                 alignment: Alignment.centerLeft,
@@ -82,7 +83,9 @@ class BonusPage extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  state is AuthSuccess ? (state).user.balance.toString() : "",
+                  state is AuthSuccess
+                      ? "Rp. ${moneySeparator((state).user.balance)}"
+                      : "0",
                   style: whiteTextStyle.copyWith(
                     fontWeight: medium,
                     fontSize: 26,
